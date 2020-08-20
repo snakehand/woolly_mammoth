@@ -33,10 +33,7 @@ fn main() {
     let mut next = 1;
     for i in 1..(NUM as u32) {
         if check_factors(i) {
-            let tk = Number {
-                num: i as u32,
-                next,
-            };
+            let tk = Number { num: i, next };
             taken.push(tk);
             next += 1;
         }
