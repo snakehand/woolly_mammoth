@@ -1,6 +1,6 @@
 use num::integer::gcd;
 
-const NUM: usize = 1000000;
+const NUM: u32 = 1000000;
 
 #[derive(Debug)]
 struct Number {
@@ -29,15 +29,17 @@ fn check_factors(n: u32) -> bool {
 
 fn main() {
     // Build a linked list of all composit numbers ..NUM
-    let mut taken: Vec<Number> = Vec::with_capacity(NUM);
     let mut next = 1;
-    for i in 1..(NUM as u32) {
-        if check_factors(i) {
-            let tk = Number { num: i, next };
-            taken.push(tk);
+    let mut taken: Vec<Number> = (1..NUM)
+        .into_iter()
+        .filter(|i| check_factors(*i))
+        .map(|i| {
+            let n = Number { num: i, next };
             next += 1;
-        }
-    }
+            n
+        })
+        .collect();
+
     let last_idx = taken.len() - 1;
     taken[last_idx].next = 0;
 
@@ -90,4 +92,11 @@ fn main() {
         }
         break;
     }
+
+    // Print smallest numbers not taken
+    // let mut n = 0;
+    // for _i in 0..30 {
+    //    println!("{:?}", taken[n]);
+    //    n = taken[n].next as usize;
+    // }
 }
